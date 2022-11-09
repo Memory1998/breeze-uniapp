@@ -1,0 +1,68 @@
+{
+	"pages": [{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "主页"
+			}
+		},
+		{
+			"path": "pages/me/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/agree/index",
+			"style": {
+				"navigationBarTitleText": "用户使用协议"
+			}
+		}
+	],
+	"subPackages": [{
+		"root": "pagesA",
+		"pages": [{
+			"path": "flow/index",
+			"style": {}
+		}]
+	}, {
+		"root": "pagesB",
+		"pages": [{
+			"path": "msg/index",
+			"style": {}
+		}]
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "index",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#707070",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		// "iconfontSrc": "", // app tabbar 字体.ttf文件路径 app 3.4.4+
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/bar/home.png",
+			"selectedIconPath": "static/bar/home-hover.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/me/index",
+			"iconPath": "static/bar/me.png",
+			"selectedIconPath": "static/bar/me-hover.png",
+			"text": "我的"
+		}]
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"uniIdRouter": {}
+}
