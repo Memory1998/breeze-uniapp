@@ -20,8 +20,8 @@ if (process.env.NODE_ENV == 'development') {
  */
 export const config = {
 	base_url: BASE_URL,
-	appId: '',
-	appKey: '',
+	appId: 'wx269d15f14a5fc7e2',
+	appKey: '273950b557912864a8627ff5ff9db82b',
 	timeout: 10000,
 	header: {
 		'content-type': 'application/json',

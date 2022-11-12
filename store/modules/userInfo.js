@@ -10,8 +10,9 @@ export default {
 		userInfo: undefined
 	},
 	mutations: {
-		setUserInfo(state) {
-			state.userInfo = JSON.parse(uni.getStorageSync('user_info'))
+		setUserInfo(state, userInfo) {
+			uni.setStorageSync('user_info', userInfo)
+			state.userInfo = userInfo
 		}
 	},
 	actions: {},
@@ -21,6 +22,7 @@ export default {
 				uni.reLaunch({
 					url: 'login'
 				})
+				return {}
 			}
 			return state.userInfo.username
 		}

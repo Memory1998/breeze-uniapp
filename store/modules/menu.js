@@ -11,11 +11,13 @@ export default {
 	mutations: {
 		setMenus(state, menus) {
 			state.menus = menus
+			uni.setStorageSync('menus', menus)
 		}
 	},
 	actions: {},
 	getters: {
 		getMenus(state) {
+			state.menus = JSON.parse(uni.getStorageSync('menus'))
 			return state.menus
 		}
 	}

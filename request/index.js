@@ -71,7 +71,6 @@ const _request = (reqBody, resolve, reject) => {
 }
 
 export default function request(reqBody) {
-	debugger
 	if (isWhite(reqBody.url)) {
 		reqBody.header['Authorization'] = "Bearer " + uni.getStorageSync('access_token')
 	}

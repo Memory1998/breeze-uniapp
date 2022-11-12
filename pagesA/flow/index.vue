@@ -7,11 +7,9 @@
 	export default {
 		components: {},
 		data() {
-			return {
-			}
+			return {}
 		},
-		methods: {
-		}
+		methods: {}
 	}
 </script>
 
