@@ -3,7 +3,7 @@ export default {
 		return {
 			// 分享参数
 			share: {
-				title: '权限小程序',
+				title: '小程序',
 				path: '/pages/index/index',
 				imageUrl: '',
 				desc: '欢迎使用',
@@ -13,7 +13,7 @@ export default {
 	},
 	/**
 	 * 分享朋友
-	 * 
+	 *
 	 * @param {Object} res
 	 */
 	onShareAppMessage(res) {
@@ -39,9 +39,9 @@ export default {
 	},
 	/**
 	 * 分享到朋友圈
-	 * 
+	 *
 	 * @param {Object} res
-	 * 
+	 *
 	 */
 	onShareTimeline(res) {
 		return {

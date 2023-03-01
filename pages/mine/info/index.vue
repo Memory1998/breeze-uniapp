@@ -1,17 +1,22 @@
 <template>
-	<view class="content">
+	<view>
+		我的信息
 	</view>
 </template>
 
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+
+			}
 		},
-		methods: {},
-		onShow() {}
+		methods: {
+
+		}
 	}
 </script>
 
-<style lang="scss">
+<style>
+
 </style>

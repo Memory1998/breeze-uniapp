@@ -1,78 +1,65 @@
+import config from '@/config'
 import {
-	config
-} from '@/common/config'
-import {
-	isWhite
-} from '@/utils/permission'
+	toast
+} from '@/utils/utils'
 
-/**
- * toast
- */
-const _show_msg = (message) => {
-	uni.showToast({
-		title: `${message}`,
-		icon: 'none',
-		duration: 2000
-	})
-}
+let timeout = 10000
+const baseUrl = config.baseURL
 
-/**
- * 请求方法
- */
-const _request = (reqBody, resolve, reject) => {
-	uni.request({
-		url: `${config.base_url}${reqBody.url}`,
-		method: reqBody.method || 'get',
-		data: reqBody.data,
-		header: {
-			...config.header
-		},
-		dataType: reqBody.dataType || 'json',
-		timeout: config.timeout || 10000,
-		success: (response) => {
-			debugger
-			if (response.statusCode && response.statusCode === 200) {
-				if (response.data.code === 2 && response.data.message) {
-					// 警告
-					_show_msg(response.data.message)
-					return
-				} else if (response.data.code === 0 && response.data.message) {
-					// 错误
-					_show_msg('系统异常')
-					return
-				} else if (response.data.code === 500) {
-					console.error(response)
-					_show_msg('服务异常')
+const request = (config) => {
+	config.header = config.header || {}
+	// 微信平台标识
+	config.header['X-PLATFORM'] = 'wx'
+	return new Promise((resolve, reject) => {
+		uni.request({
+				url: config.baseUrl || baseUrl + config.url,
+				method: config.method || 'GET',
+				timeout: config.timeout || timeout,
+				data: config.data,
+				header: config.header,
+				dataType: 'json'
+			}).then((response) => {
+				let [error, res] = response
+				if (error) {
+					toast('连接失败')
+					reject('后端接口连接异常')
 					return
 				}
-				resolve(response.data)
-			} else if (response.statusCode === 400) {
-				_show_msg('参数解析失败')
-			} else if (response.statusCode === 404) {
-				_show_msg('请求地址不存在')
-			} else if (response.statusCode === 401) {
-				_show_msg(response.data.message)
-				// TODO 重新登录
-			} else if (response.statusCode === 403) {
-				_show_msg(response.data.message)
-			}
-			console.error(response.statusCode)
-		},
-		fail: (error) => {
-			debugger
-			if (error.errMsg.includes('Unexpected')) {
-				_show_msg('连接服务被拒绝')
-			} else if (error.errMsg.includes('timeout')) {
-				_show_msg('请求超时')
-			}
-			reject(error.data)
-		}
+				console.log(res.data)
+				if (res.data.code === 2 && res.data.message) {
+					// 业务逻辑验证警告
+					toast('参数错误')
+				} else if (res.data.code === 0 && res.data.message) {
+					// 业务错误失败
+					toast('请求失败')
+					reject(res)
+				} else if (res.data.code === 500) {
+					// 系统错误
+					toast('系统异常')
+					reject(res)
+				}
+				resolve(res.data)
+			})
+			.catch(error => {
+				debugger
+				if (error.message.includes('Unexpected')) {
+					toast('连接服务被拒绝')
+				} else if (error.message.includes('timeout')) {
+					toast('请求超时')
+				} else if (error.response.status === 400) {
+					toast('参数解析失败')
+				} else if (error.response.status === 404) {
+					toast('请求地址不存在')
+				} else if (error.response.status === 401) {
+					showErrorMsg(error.response, error.response.data.message)
+					reLoginConfirm()
+				} else if (error.response.status === 403) {
+					showErrorMsg(error.response, error.response.data.message)
+				}
+				console.error(error.response.status)
+				reject(error)
+			})
 	})
 }
 
-export default function request(reqBody) {
-	if (isWhite(reqBody.url)) {
-		reqBody.header['Authorization'] = "Bearer " + uni.getStorageSync('access_token')
-	}
-	return new Promise((resolve, reject) => _request(reqBody, resolve, reject))
-}
+export default request

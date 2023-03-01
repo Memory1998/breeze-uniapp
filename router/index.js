@@ -1,15 +1,15 @@
-import hasPermission from '@/utils/permission'
+import {
+	hasPermission
+} from '@/utils/permission'
+import {
+	toast
+} from '@/utils/utils'
 
-/**
- * 	页面跳转前进行拦截 
- */
 uni.addInterceptor('navigateTo', {
 	invoke(e) {
 		// invoke根据返回值进行判断是否继续执行跳转
 		if (!hasPermission(e.url)) {
-			uni.reLaunch({
-				url: 'login'
-			})
+			toast('不可跳转')
 			return false
 		}
 		return true
@@ -19,16 +19,11 @@ uni.addInterceptor('navigateTo', {
 	}
 })
 
-/**
- * 	页面跳转前进行拦截 
- */
 uni.addInterceptor('reLaunch', {
 	invoke(e) {
 		// invoke根据返回值进行判断是否继续执行跳转
 		if (!hasPermission(e.url)) {
-			uni.reLaunch({
-				url: 'login'
-			})
+			toast('不可跳转')
 			return false
 		}
 		return true
@@ -38,16 +33,11 @@ uni.addInterceptor('reLaunch', {
 	}
 })
 
-/**
- * 	页面跳转前进行拦截 
- */
 uni.addInterceptor('redirectTo', {
 	invoke(e) {
 		// invoke根据返回值进行判断是否继续执行跳转
 		if (!hasPermission(e.url)) {
-			uni.reLaunch({
-				url: 'login'
-			})
+			toast('不可跳转')
 			return false
 		}
 		return true
@@ -60,9 +50,7 @@ uni.addInterceptor('redirectTo', {
 uni.addInterceptor('switchTab', {
 	invoke(e) {
 		if (!hasPermission(e.url)) {
-			uni.reLaunch({
-				url: 'login',
-			})
+			toast('不可跳转')
 			return false
 		}
 		return true
